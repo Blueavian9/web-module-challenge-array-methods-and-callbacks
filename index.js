@@ -6,17 +6,29 @@ const { fifaData } = require('./fifa.js')
 Practice accessing data by console.log-ing the following pieces of data note. 
 
 💡 HINT: You may want to filter the data first 😉*/
+console.log(fifaData.filter((element) => {
+    return element['Year'] === 2014 && element['Stage'] === 'Final';
+}));
 
 //(a) Home Team name for 2014 world cup final
-
+console.log('task 1a:', 
+fifaData.filter((element, index) => {
+    if(element['Year'] === 2014 && element['Stage'] === 'Final') {
+        return element['Home Team Name'];
+    };
+}));
 //(b) Away Team name for 2014 world cup final
-
+console.log('task 1b:', fifaData.filter((element, index) => {
+  if(element['Year'] === 2014 && element['Stage'] === 'Final') { 
+      return element['Away Team Name'];
+  };
+}));
 //(c) Home Team goals for 2014 world cup final
-
+console.log('task 1c:', '2014 world cup final');
 //(d) Away Team goals for 2014 world cup final
-
+console.log('task 1d:', '2014 world cup final');
 //(e) Winner of 2014 world cup final */
-
+console.log('task 1e:', '2014 world cup final');
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 2: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
 Use getFinals to do the following:
@@ -26,8 +38,8 @@ Use getFinals to do the following:
 💡 HINT - you should be looking at the stage key inside of the objects
 */
 
-function getFinals(/* code here */) {
-    /* code here */
+function getFinals(array) {
+    
  }
 
 
