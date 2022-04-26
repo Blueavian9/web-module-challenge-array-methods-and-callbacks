@@ -24,11 +24,23 @@ console.log('task 1b:', fifaData.filter((element, index) => {
   };
 }));
 //(c) Home Team goals for 2014 world cup final
-console.log('task 1c:', '2014 world cup final');
+console.log('task 1c:', fifaData.filter((element, index) => {
+    if(element['Year'] === 2014 && element['Stage'] === 'Final') {
+        return element['Home Team Goals'];
+    };
+}));
 //(d) Away Team goals for 2014 world cup final
-console.log('task 1d:', '2014 world cup final');
+console.log('task 1d:', fifaData.filter((element, index) => {
+    if(element['Year'] === 2014 && element['Stage'] === 'Final') {
+        return element['Away Team Goals'];
+    };
+}));
 //(e) Winner of 2014 world cup final */
-console.log('task 1e:', '2014 world cup final');
+console.log('task 1e:', fifaData.filter((element, index) => {
+    if(element['Year'] === 2014 && element['Stage'] === 'Final') {
+        return element['Winner'];
+    };
+}));
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 2: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
 Use getFinals to do the following:
@@ -38,9 +50,11 @@ Use getFinals to do the following:
 💡 HINT - you should be looking at the stage key inside of the objects
 */
 
+
 function getFinals(array) {
-    
+    return array.filter(element => element['Stage'] === 'Final');
  }
+
 
 
 
@@ -50,10 +64,10 @@ Use the higher-order function called getYears to do the following:
 2. Receive a callback function as the second parameter that will take getFinals from task 2 as an argument
 3. Return an array called years containing all of the years in the getFinals data set*/
 
-function getYears(/* code here */) {
-    /* code here */
+function getYears(array, callback) {
+    const years = callback(array).map(element => {return element.Year}) 
+    return years  
 }
-
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 4: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -64,10 +78,22 @@ Use the higher-order function getWinners to do the following:
 💡 HINT: Don't worry about ties for now (Please see the README file for info on ties for a stretch goal.)
 4. Returns the names of all winning countries in an array called `winners` */ 
 
-function getWinners(/* code here */) {
-    /* code here */
+function getWinners(array, callback) {
+    const winners = callback(array).map(element => {
+        if (element['Home Team Goals'] > element['Away Team Goals']) {
+            return element['Home Team Name'];
+        } else if (element['Home Team Goals'] < element['Away Team Goals']) {
+            return element['Away Team Name'];
+        } else if (element['Home Team Goals'] === element['Away Team Goals']) {
+            if (element['Win conditions'].split(' ').splice(0, 1).join() === 'Brazil') {
+                return "Italy";
+            }else if (element['Win conditions'].split(' ').splice(0, 1).join() === 'Italy') {
+                return "France";
+            }
+        }
+    });
+    return winners;
 }
-
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
@@ -81,11 +107,16 @@ Use the higher-order function getWinnersByYear to do the following:
 💡 HINT: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
+
+function getWinnersByYear(array, getFinals, getYears, getWinners) {
+    let year = getYears(array, getFinals);
+    let country = getWinners(array, getFinals);
+    let stringArr = []
+    for (let index = 0; index < country.length; index++) {
+        stringArr.push(`In ${year[index]}, ${country[index]} won the world cup!`);
+    }
+    return stringArr;
 }
-
-
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Use the higher order function getAverageGoals to do the following: 
@@ -100,10 +131,14 @@ Use the higher order function getAverageGoals to do the following:
  
 */
 
-function getAverageGoals(/* code here */) {
-    /* code here */
+function getAverageGoals(getFinals) {
+    let homeTeam = getFinals.map(element => element['Home Team Goals']).reduce((a, b) => (a + b));
+    let awayTeam = getFinals.map(element => element['Away Team Goals']).reduce((a, b) => (a + b));
+    let homeTeamA = homeTeam / getFinals.map(element => element['Away Team Goals']).length;
+    let awayTeamA = awayTeam / getFinals.map(element => element['Home Team Goals']).length;
+    let average = homeTeamA + awayTeamA;
+    return average.toFixed(2);
  }
-
 
 
 
